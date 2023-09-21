@@ -83,6 +83,9 @@ def handle(filename, width, height):
         fi += 1
 
     cap.release()
+    if(fi == 0):
+        print('[-] blad. prawdopodobnie nie znaleziono pliku')
+        exit(-1)
     print('[+] odczytano plik')
 
     data = []
