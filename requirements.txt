@@ -1,0 +1,5 @@
+pillow
+pyperclip
+opencv
+flask
+flask-cors
