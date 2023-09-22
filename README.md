@@ -7,7 +7,7 @@ Gdy twoje oceny cie dołują, wyświelt sobie obrazek kotka 🐈
 ---
 
 ## Jak?
-1. Pobierz kod projektu jako ZIP
+1. Pobierz kod projektu lub sklonuj repozytorium
 2. Wypakuj, wejdz do folderu, uruchom cmd
 3. Zainstaluj zależności `pip install -r .\requirements.txt`
 4. Uruchom program `python main.py`. Możesz podać od razu nazwe pliku jako argument
