@@ -1,39 +1,43 @@
 from PIL import Image
 import sys
 import pyperclip
-import random
 import json
-
+import time
 import animation
 
 HEIGHT = 15
 WIDTH = 15
+FPS = 15
 
 with open("config.json", "r") as config:
     data = json.load(config)
-    HEIGHT = data['tables']
-    WIDTH = data['max_grades_per_table']
+    HEIGHT = data['height']
+    WIDTH = data['width']
+    FPS = data['fps']
 
-print('[*] oceny w linijce:', WIDTH)
-print('[*] przedmiotow:', HEIGHT)
+print('[*] grid', str(WIDTH) + 'x' + str(HEIGHT), 'ocen,', FPS, 'fps')
 
 path = ''
+wait = False
 if(len(sys.argv) == 2):
     path = sys.argv[1]
 else:
     path = input('podaj nazwe pliku: ')
+    wait = True # probably double-clicked file. wait so it doesnt close the console
 
 print('[*] ladowanie...')
 
 if(animation.isVideo(path)):
     print('[*] plik zostanie potraktowany jako wideo')
-    animation.handle(path, WIDTH, HEIGHT)
+    time.sleep(1)
+    animation.handle(path, WIDTH, HEIGHT, FPS)
     exit()
 
 try:
     im = Image.open(path)
 except:
     print('[-] plik nie istnieje!')
+    if(wait): input('')
     exit(-1)
 
 im = im.resize((WIDTH, HEIGHT))
@@ -41,14 +45,24 @@ pixels = im.load()
 
 print('[+] zaladowano plik')
 
+frame = []
+
+for y in range(HEIGHT):
+    for x in range(WIDTH):
+        px = pixels[x,y]
+        try:
+            r,g,b,a = px
+        except:
+            r,g,b = px
+        frame.append([r,g,b])
+
 jscode = ''
 with open('script_image.js', 'r') as f:
     for line in f.readlines():
         jscode += line
-
-for x in range(WIDTH):
-    for y in range(HEIGHT):
-        jscode += 'add(final[{}][0],"{}","rgb{}")'.format(y, random.randrange(4, 6), str(pixels[x, y])) + ';'
+jscode += 'const data = ' + str(frame) + '; draw({},{})'.format(WIDTH, HEIGHT)
 
 pyperclip.copy(jscode)
 print('[+] skopiowano kod do schowka! wklej go do konsoli na librusie')
+
+if(wait): input('')

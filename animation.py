@@ -58,7 +58,7 @@ def get_data():
     index = request.args.get('frame', default=0, type=int)
     return json.dumps(data[index], cls=NpEncoder)
 
-def handle(filename, width, height):
+def handle(filename, width, height, fps):
     global data
 
     try:
@@ -102,7 +102,7 @@ def handle(filename, width, height):
     with open('script_animation.js', 'r') as f:
         for line in f.readlines():
             jscode += line
-    jscode += 'draw({},{})'.format(width, height)
+    jscode += 'const width={}; const height={}; const fps={}; \ndrawingStarted=new Date().getTime();\ndraw();'.format(width, height, fps)
     pyperclip.copy(jscode)
     print('[+] skopiowano kod do schowka! wklej go do konsoli na librusie')
     print('[!] nie musisz wchodzic na link ktory za chwile sie pojawi')

@@ -26,14 +26,30 @@ for(let i = 0; i < gradeTables.length; i++) {
     final.push([trs[2], trs[5]]);
 }
 
-console.log('[+] wszystko git, rysowanko! (to moze chwile zajac)');
+console.log('[+] wszystko git, rysowanko!');
 
 /* drawing */ 
 
 const gradeTemplate = '<span class="grade-box" style="background-color:{COLOR};"><a class="ocena">{GRADE}</a></span>';
-function add(table, grade, color) {
-	if(table.innerText == 'Brak ocen') table.innerHTML = '';
-	table.innerHTML += gradeTemplate.replace('{COLOR}', color).replace('{GRADE}', grade);
+function template(grade, color) {
+	return gradeTemplate.replace('{COLOR}', color).replace('{GRADE}', grade);
+}
+
+function grayScale(color) {
+    return 0.299*color[0] + 0.587*color[1] + 0.114*color[2];
+}
+
+function draw(width, height) {
+    var frame = data;
+    var frameI = 0;
+    for(let y = 0; y < height; y++) {
+        var toAdd = '';
+        for(let x = 0; x < width; x++) {
+            toAdd += template(Math.floor(3+grayScale(frame[frameI])/80), 'rgb('+frame[frameI]+')');
+            frameI++;
+        }
+        final[y][0].innerHTML = toAdd;
+    }
 }
 
 // python-generated code starts here...
