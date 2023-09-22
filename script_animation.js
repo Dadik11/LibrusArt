@@ -45,10 +45,9 @@ function clr() {
 }
 
 var i = 0;
-var startedDraw = 0;
+var lastDraw = 0;
 var drawingStarted = 0;
 
-var lastDraw = 0;
 var lastFrame = -1;
 var current;
 function draw() {
@@ -64,33 +63,23 @@ function draw() {
     if(new Date().getTime() - drawingStarted < (1000/fps)*i) {
         requestAnimationFrame(draw); return;
     }
+    
+    console.log('[*] rysowanie klatki', i, 'delta t', new Date().getTime() - lastDraw, '/', 1000/fps);
     lastDraw = new Date().getTime();
-    
-    console.log('[*] rysowanie klatki', i, 'delta t', new Date().getTime() - startedDraw, '/', 1000/fps);
-    startedDraw = new Date().getTime();
 
-    //fetch('http://127.0.0.1:5000?frame='+i).then(res => res.json()).then(json => {
-        var frame = current;
-        var frameI = 0;
-        clr();
-        for(let y = 0; y < height; y++) {
-            var toAdd = '';
-            for(let x = 0; x < width; x++) {
-                toAdd += add(Math.floor(3+grayScale(frame[frameI])/80), 'rgb('+frame[frameI]+')');
-                frameI++;
-            }
-            final[y][0].innerHTML = toAdd;
+    var frameI = 0;
+    clr();
+    for(let y = 0; y < height; y++) {
+        var toAdd = '';
+        for(let x = 0; x < width; x++) {
+            toAdd += add(Math.floor(3+grayScale(current[frameI])/80), 'rgb('+current[frameI]+')');
+            frameI++;
         }
+        final[y][0].innerHTML = toAdd;
+    }
 
-        i++;
+    i++;
 
-        /* if(json.length>1) {
-            i += 1;
-            setTimeout(draw, Math.max(0, 1000/fps - (new Date().getTime() - startedDraw)));
-        } */
-    //});
-
-    
     requestAnimationFrame(draw);
 }
 
