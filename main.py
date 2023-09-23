@@ -3,6 +3,8 @@ import sys
 import pyperclip
 import json
 import time
+import easygui
+
 import animation
 
 HEIGHT = 15
@@ -22,8 +24,8 @@ wait = False
 if(len(sys.argv) == 2):
     path = sys.argv[1]
 else:
-    path = input('podaj nazwe pliku: ')
-    wait = True # probably double-clicked file. wait so it doesnt close the console
+    path = easygui.fileopenbox()
+    wait = True # probably double-clicked the file. wait so it doesnt close the console
 
 print('[*] ladowanie...')
 
