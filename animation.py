@@ -30,7 +30,7 @@ video_file_extensions = (
 
 def isVideo(filename):
     splt = filename.split('.')
-    return '.'+splt[len(splt) - 1] in video_file_extensions
+    return '.'+splt[-1] in video_file_extensions
 
 
 import cv2
