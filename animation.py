@@ -29,8 +29,7 @@ video_file_extensions = (
 '.zm1', '.zm2', '.zm3', '.zmv' )
 
 def isVideo(filename):
-    splt = filename.split('.')
-    return '.'+splt[-1] in video_file_extensions
+    return '.'+filename.split('.')[-1] in video_file_extensions
 
 
 import cv2
