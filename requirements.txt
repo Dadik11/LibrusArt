@@ -4,3 +4,4 @@ opencv-python
 flask
 flask-cors
 easygui
+colorama

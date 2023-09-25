@@ -39,6 +39,8 @@ from flask_cors import CORS
 import json
 import numpy as np
 
+from colorer import *
+
 data = []
 
 app = Flask(__name__)
@@ -69,7 +71,7 @@ def handle(filename, width, height, fps):
     try:
         cap = cv2.VideoCapture(filename)
     except:
-        print('[-] plik nie istnieje!')
+        error('plik nie istnieje!')
         exit(-1)
 
     frames = []
@@ -84,15 +86,15 @@ def handle(filename, width, height, fps):
 
         frames.append(resized)
         if(fi % 100 == 0):
-            print('[*] czytanie... {} / {}'.format(fi, length))
+            info('czytanie... {} / {}'.format(fi, length))
         fi += 1
 
     cap.release()
-    print('[*] czytanie... {} / {}'.format(length, length))
+    info('czytanie... {} / {}'.format(length, length))
     if(fi == 0):
-        print('[-] blad. prawdopodobnie nie znaleziono pliku')
+        error('blad. prawdopodobnie nie znaleziono pliku')
         exit(-1)
-    print('[+] odczytano plik')
+    okay('odczytano plik')
 
     data = []
 
@@ -110,7 +112,7 @@ def handle(filename, width, height, fps):
             jscode += line
     jscode += 'const width={}; const height={}; const fps={}; \ndrawingStarted=new Date().getTime();\ndraw();'.format(width, height, fps)
     pyperclip.copy(jscode)
-    print('[+] skopiowano kod do schowka! wklej go do konsoli na librusie')
-    print('[!] nie musisz wchodzic na link ktory za chwile sie pojawi')
+    okay('skopiowano kod do schowka! wklej go do konsoli na librusie')
+    okay('!!! nie musisz wchodzic na link ktory za chwile sie pojawi !!!')
 
     app.run()

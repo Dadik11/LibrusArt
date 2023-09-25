@@ -1,3 +1,5 @@
+from colorer import *
+initialize()
 from PIL import Image
 import sys
 import pyperclip
@@ -17,7 +19,7 @@ with open("config.json", "r") as config:
     WIDTH = data['width']
     FPS = data['fps']
 
-print('[*] grid', str(WIDTH) + 'x' + str(HEIGHT), 'ocen,', FPS, 'fps')
+info('grid {}x{} ocen, {} fps'.format(WIDTH, HEIGHT, FPS))
 
 path = ''
 wait = False
@@ -27,10 +29,10 @@ else:
     path = easygui.fileopenbox()
     wait = True # probably double-clicked the file. wait so it doesnt close the console
 
-print('[*] ladowanie...')
+info('ladowanie...')
 
 if(animation.isVideo(path)):
-    print('[*] plik zostanie potraktowany jako wideo')
+    info('plik zostanie potraktowany jako wideo')
     time.sleep(1)
     animation.handle(path, WIDTH, HEIGHT, FPS)
     exit()
@@ -38,14 +40,14 @@ if(animation.isVideo(path)):
 try:
     im = Image.open(path)
 except:
-    print('[-] plik nie istnieje!')
+    error('plik nie istnieje!')
     if(wait): input('')
     exit(-1)
 
 im = im.resize((WIDTH, HEIGHT))
 pixels = im.load()
 
-print('[+] zaladowano plik')
+okay('zaladowano plik')
 
 frame = []
 
@@ -65,6 +67,6 @@ with open('script_image.js', 'r') as f:
 jscode += 'const data = ' + str(frame) + '; draw({},{})'.format(WIDTH, HEIGHT)
 
 pyperclip.copy(jscode)
-print('[+] skopiowano kod do schowka! wklej go do konsoli na librusie')
+okay('skopiowano kod do schowka! wklej go do konsoli na librusie')
 
 if(wait): input('')
