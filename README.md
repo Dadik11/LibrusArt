@@ -36,10 +36,10 @@ Taki fajny plik w którym możesz zmienić ustawienia
 ```
 **width**: ile ocen zmieści się w jednym rzędzie (szerokość obrazu) <br />
 **height**: ile przedmiotów wyświetla librus (wysokość obrazu) <br />
-**fps**: chyba nie musze tego tłumaczyć, choć warto zaznaczyć że jeśli FPS będzie większe od 5 to animacja będzie lagować. Zostanie to naprawione za niedługo ™
+**fps**: chyba nie musze tego tłumaczyć, choć warto zaznaczyć że jeśli FPS będzie większe od 5 to animacja będzie lagować. Zostanie to naprawione kiedyś ™
 
 ---
 
 ## TODO (może za 5 lat)
 - [ ] kolorki w terminalu (😎)
-- [ ] buffer video czy coś (żeby można było użyć 30fps albo więcej)
+- [x] buffer video czy coś (żeby nie srało requestami) (fps nie naprawiłem XD)
