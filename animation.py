@@ -54,8 +54,14 @@ class NpEncoder(json.JSONEncoder): # best
 
 @app.route('/')
 def get_data():
-    index = request.args.get('frame', default=0, type=int)
-    return json.dumps(data[index], cls=NpEncoder)
+    index = request.args.get('index', default=0, type=int)
+    count = request.args.get('count', default=1, type=int)
+
+    if(index >= len(data)):
+        return json.dumps({'end': True})
+    if(index + count >= len(data)):
+        count = len(data)-index
+    return json.dumps(data[index:index+count], cls=NpEncoder)
 
 def handle(filename, width, height, fps):
     global data
@@ -78,10 +84,11 @@ def handle(filename, width, height, fps):
 
         frames.append(resized)
         if(fi % 100 == 0):
-            print('[*] czytanie... ' + str(fi) + ' / ' + str(length))
+            print('[*] czytanie... {} / {}'.format(fi, length))
         fi += 1
 
     cap.release()
+    print('[*] czytanie... {} / {}'.format(length, length))
     if(fi == 0):
         print('[-] blad. prawdopodobnie nie znaleziono pliku')
         exit(-1)

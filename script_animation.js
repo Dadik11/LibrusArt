@@ -44,28 +44,38 @@ function clr() {
     }
 }
 
+// const: width, height, fps - added later by python
+
 var i = 0;
 var lastDraw = 0;
 var drawingStarted = 0;
 
-var lastFrame = -1;
-var current;
+var frames = [];
 function draw() {
-    if(i != lastFrame) {
-        fetch('http://127.0.0.1:5000?frame='+i).then(res => res.json()).then(json => {
-            current = json;
-            lastFrame = i;
+    if(frames.length < fps*2) {
+        fetch(`http://127.0.0.1:5000?index=${i}&count=${fps*3}`).then(res => res.json()).then(json => {
+            if(json['end']) {
+                console.log('[+] zakonczono sukcesem!');
+                return;
+            }
+            json.forEach((frame) => {
+                frames.push(frame);
+            });
             requestAnimationFrame(draw);
         });
         return;
     }
     
-    if(new Date().getTime() - drawingStarted < (1000/fps)*i) {
+    const diff = new Date().getTime() - drawingStarted;
+    if(diff < (1000/fps)*i) {
         requestAnimationFrame(draw); return;
     }
     
-    console.log('[*] rysowanie klatki', i, 'delta t', new Date().getTime() - lastDraw, '/', 1000/fps);
+    console.log('[*] rysowanie klatki', i, 'delta t', new Date().getTime() - lastDraw, '/', Math.round(100/fps)*10, 'offset', Math.round(1000/fps)*i - diff);
     lastDraw = new Date().getTime();
+
+    var current = frames[0];
+    frames.shift();
 
     var frameI = 0;
     clr();
@@ -79,7 +89,6 @@ function draw() {
     }
 
     i++;
-
     requestAnimationFrame(draw);
 }
 
