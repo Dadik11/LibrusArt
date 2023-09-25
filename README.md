@@ -41,5 +41,5 @@ Taki fajny plik w którym możesz zmienić ustawienia
 ---
 
 ## TODO (może za 5 lat)
-- [ ] kolorki w terminalu (😎)
+- [x] kolorki w terminalu (😎)
 - [x] buffer video czy coś (żeby nie srało requestami) (fps nie naprawiłem XD)
