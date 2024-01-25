@@ -21,9 +21,6 @@ Dobre pytanie :p
 [No ba](https://youtu.be/MbJSNydHpuQ)
 
 ## Nie działa, co teraz?
-*Real men test in production*<br />
-\- Stockton Rush
-
 Jeśli coś nie działa, to gratuluje! Właśnie zostałeś beta testerem 🥳 <br />
 Otwórz nowy problem na GitHub, wklej co trzeba i postaram sie naprawić
 
