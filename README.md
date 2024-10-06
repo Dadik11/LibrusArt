@@ -1,6 +1,6 @@
 # LibrusArt🎨
 
-<img src="https://cdn.dadik.lol/librusart.png" height="200"/>
+<img src="https://github.com/Dadik11/LibrusArt/blob/main/github/librusart.png" height="200"/>
 <br />
 Gdy twoje oceny cie dołują, wyświelt sobie obrazek kotka 🐈
 
